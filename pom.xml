@@ -4,9 +4,9 @@
 
   <groupId>nl.vpro</groupId>
   <artifactId>couchdb</artifactId>
-  <version>0.1-SNAPSHOT</version>
+  <version>1.0</version>
   <packaging>jar</packaging>
-  <description></description>
+  <description />
 
   <properties>
     <github.maven.repository>file:///Users/michiel/github/mihxil/mvn-repo/</github.maven.repository>
