@@ -13,7 +13,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Stolen from https://code.google.com/p/jcouchdb/source/browse/trunk/test/org/jcouchdb/db/OptionsTestCase.java?r=232
  * @author Michiel Meeuwissen
- * @since 2.0
+ * @since 1.0
  */
 public class CouchdbOptionsTest {
 

@@ -9,14 +9,17 @@ import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.JsonToken;
+import org.codehaus.jackson.map.ObjectMapper;
 
 /**
  * An iterator over a couchdb view that is streaming, which doesn't use any memory, so you can use for huge results.
  *
  * @author Michiel Meeuwissen
- * @since 1.3
+ * @since 1.0
  */
 public class CouchdbViewIterator implements Iterator<JsonNode> {
+
+    private static ObjectMapper mapper = new ObjectMapper();
 
     private final JsonParser parser;
 
@@ -25,7 +28,7 @@ public class CouchdbViewIterator implements Iterator<JsonNode> {
     private int depth = 0;
 
     public CouchdbViewIterator(InputStream is) throws IOException {
-        JsonFactory jsonFactory = JacksonMapper.INSTANCE.getJsonFactory();
+        JsonFactory jsonFactory = mapper.getJsonFactory();
         this.parser = jsonFactory.createJsonParser(is);
     }
 

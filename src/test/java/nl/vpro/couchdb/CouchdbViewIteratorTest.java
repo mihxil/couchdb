@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * @author Michiel Meeuwissen
- * @since 2.0
+ * @since 1.0
  */
 public class CouchdbViewIteratorTest {
 
