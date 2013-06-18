@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
-import org.codehaus.jackson.JsonNode;
 import org.junit.Test;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 import static org.junit.Assert.assertEquals;
 
@@ -26,8 +28,8 @@ public class CouchdbViewIteratorTest {
             results.add(node);
         }
         assertEquals(2, results.size());
-        assertEquals("urn:vpro:media:program:14367824", results.get(0).get("doc").get("urn").getTextValue());
-        assertEquals("urn:vpro:media:program:14389752", results.get(1).get("doc").get("urn").getTextValue());
+        assertEquals("urn:vpro:media:program:14367824", results.get(0).get("doc").get("urn").asText());
+        assertEquals("urn:vpro:media:program:14389752", results.get(1).get("doc").get("urn").asText());
     }
 
     @Test
@@ -40,11 +42,28 @@ public class CouchdbViewIteratorTest {
             results.add(node);
         }
         assertEquals(5, results.size());
-        assertEquals("urn:vpro:media:group:20814338", results.get(0).get("doc").get("urn").getTextValue());
-        assertEquals("urn:vpro:media:group:20809885", results.get(1).get("doc").get("urn").getTextValue());
-        assertEquals("urn:vpro:media:group:20719987", results.get(2).get("doc").get("urn").getTextValue());
-        assertEquals("urn:vpro:media:group:20720014", results.get(3).get("doc").get("urn").getTextValue());
-        assertEquals("urn:vpro:media:group:20709174", results.get(4).get("doc").get("urn").getTextValue());
+        assertEquals("urn:vpro:media:group:20814338", results.get(0).get("doc").get("urn").asText());
+        assertEquals("urn:vpro:media:group:20809885", results.get(1).get("doc").get("urn").asText());
+        assertEquals("urn:vpro:media:group:20719987", results.get(2).get("doc").get("urn").asText());
+        assertEquals("urn:vpro:media:group:20720014", results.get(3).get("doc").get("urn").asText());
+        assertEquals("urn:vpro:media:group:20709174", results.get(4).get("doc").get("urn").asText());
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testNoSuchElementException() throws IOException {
+        InputStream inputStream = CouchdbViewIterator.class.getResourceAsStream("/exampleview.json");
+        CouchdbViewIterator iterator = new CouchdbViewIterator(inputStream);
+        iterator.next();
+        iterator.next();
+        iterator.next();
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testRemove() throws IOException {
+        InputStream inputStream = CouchdbViewIterator.class.getResourceAsStream("/exampleview.json");
+        CouchdbViewIterator iterator = new CouchdbViewIterator(inputStream);
+        iterator.next();
+        iterator.remove();
     }
 
 }
