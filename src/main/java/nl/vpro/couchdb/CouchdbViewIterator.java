@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -28,8 +27,7 @@ public class CouchdbViewIterator implements Iterator<JsonNode> {
     private int depth = 0;
 
     public CouchdbViewIterator(InputStream is) throws IOException {
-        JsonFactory jsonFactory = mapper.getJsonFactory();
-        this.parser = jsonFactory.createJsonParser(is);
+        this.parser = mapper.getFactory().createParser(is);
     }
 
     @Override
