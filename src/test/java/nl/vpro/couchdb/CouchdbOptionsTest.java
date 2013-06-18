@@ -18,7 +18,6 @@ import static org.junit.Assert.assertTrue;
 public class CouchdbOptionsTest {
 
 
-
     @Test
     public void option() {
         String query = new CouchdbOptions("foo", 1).put("bar", "baz!").toQuery();

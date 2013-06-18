@@ -47,12 +47,12 @@ public class CouchdbViewIterator implements Iterator<JsonNode> {
         return result;
     }
 
-	@Override
-	public void remove() {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException();
+    }
 
-	private void findNext() {
+    private void findNext() {
         if(next == null) {
             try {
                 while(true) {
@@ -69,7 +69,7 @@ public class CouchdbViewIterator implements Iterator<JsonNode> {
                     if(token == JsonToken.START_OBJECT && depth == 2) {
                         next = parser.readValueAsTree();
                         depth--;
-                        if("rows".equals(parser.getParsingContext().getParent().getCurrentName()) && next.has("doc") && ! next.get("doc").has("_attachments")) {
+                        if("rows".equals(parser.getParsingContext().getParent().getCurrentName()) && next.has("doc") && !next.get("doc").has("_attachments")) {
                             break;
                         } else {
                             next = null;

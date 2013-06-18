@@ -51,7 +51,7 @@ public class CouchdbOptions {
     }
 
     public CouchdbOptions(Map<String, Object> map) {
-        for (Map.Entry<String, Object> e : map.entrySet()) {
+        for(Map.Entry<String, Object> e : map.entrySet()) {
             put(e.getKey(), e.getValue());
         }
     }
@@ -62,9 +62,9 @@ public class CouchdbOptions {
      * @param CouchdbOptions CouchdbOptions to be copied, can be <code>null</code>.
      */
     public CouchdbOptions(CouchdbOptions CouchdbOptions) {
-        if (CouchdbOptions != null) {
+        if(CouchdbOptions != null) {
             // CouchdbOptions values are allready encoded thus need all to be added unencoded
-            for (String key : CouchdbOptions.keys()) {
+            for(String key : CouchdbOptions.keys()) {
                 putUnencoded(key, CouchdbOptions.get(key));
             }
         }
@@ -75,7 +75,7 @@ public class CouchdbOptions {
     }
 
     public CouchdbOptions put(String key, Object value) {
-        if (JSON_ENCODED_OPTIONS.contains(key)) {
+        if(JSON_ENCODED_OPTIONS.contains(key)) {
             return putEncoded(key, value);
         } else {
             return putUnencoded(key, value);
@@ -87,7 +87,7 @@ public class CouchdbOptions {
             String json = mapper.writeValueAsString(value);
             content.put(key, json);
             return this;
-        } catch (IOException e) {
+        } catch(IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -159,20 +159,20 @@ public class CouchdbOptions {
 
         boolean first = true;
         try {
-            for (String key : keys()) {
-                if (!first) {
+            for(String key : keys()) {
+                if(!first) {
                     sb.append("&");
                 }
                 sb.append(key).append("=");
                 sb.append(URLEncoder.encode(get(key).toString(), "UTF-8"));
                 first = false;
             }
-            if (sb.length() <= 1) {
+            if(sb.length() <= 1) {
                 return "";
             } else {
                 return sb.toString();
             }
-        } catch (UnsupportedEncodingException e) {
+        } catch(UnsupportedEncodingException e) {
             throw new RuntimeException("error converting option value", e);
         }
     }
