@@ -36,14 +36,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class CouchdbOptions {
     private static final long serialVersionUID = -4025495141211906568L;
 
-    private static ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper mapper = new ObjectMapper();
 
-    private Map<String, Object> content = new HashMap<String, Object>();
+    private final Map<String, Object> content = new HashMap<>();
 
-    final static Set<String> JSON_ENCODED_OPTIONS = Collections.unmodifiableSet(new HashSet<String>(Arrays.asList(
-            "key",
-            "startkey",
-            "endkey"
+    final static Set<String> JSON_ENCODED_OPTIONS = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
+        "key",
+        "startkey",
+        "endkey"
     )));
 
     public CouchdbOptions() {

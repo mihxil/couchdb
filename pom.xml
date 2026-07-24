@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>nl.vpro</groupId>
@@ -8,34 +8,40 @@
   <packaging>jar</packaging>
   <description />
 
-  <properties>
-    <github.maven.repository>file:///Users/michiel/github/mihxil/mvn-repo/</github.maven.repository>
-  </properties>
 
   <scm>
-    <connection>scm:git:git://github.com/mihxil/couchdb.git</connection>
-    <developerConnection>scm:git:ssh://git@github.com/mihxil/couchdb.git</developerConnection>
+    <connection>scm:git:${project.scm.url}</connection>
+    <developerConnection>scm:git:${project.scm.url}</developerConnection>
     <url>https://github.com/mihxil/couchdb</url>
     <tag>HEAD</tag>
   </scm>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.fasterxml.jackson</groupId>
+        <artifactId>jackson-bom</artifactId>
+        <version>2.22.1</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <dependencies>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.13.1</version>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>6.1.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
-      <version>2.18.6</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-      <version>2.22.1</version>
     </dependency>
   </dependencies>
 
@@ -46,26 +52,35 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.0</version>
+        <version>3.15.0</version>
         <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
+          <source>8</source>
+          <target>8</target>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.sonatype.central</groupId>
+        <artifactId>central-publishing-maven-plugin</artifactId>
+        <version>0.11.0</version>
+        <extensions>true</extensions>
+        <configuration>
+          <publishingServerId>central</publishingServerId>
+          <autoPublish>true</autoPublish>
+          <waitUntil>published</waitUntil>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>3.3.1</version>
+        <configuration>
+          <tagNameFormat>@{project.version}</tagNameFormat>
+        </configuration>
+      </plugin>
+
     </plugins>
 
   </build>
 
-  <distributionManagement>
-    <repository>
-      <id>repo</id>
-      <url>${github.maven.repository}/releases</url>
-    </repository>
-    <snapshotRepository>
-      <id>snapshot-repo</id>
-      <url>${github.maven.repository}/snapshots</url>
-    </snapshotRepository>
-  </distributionManagement>
 
 
 </project>

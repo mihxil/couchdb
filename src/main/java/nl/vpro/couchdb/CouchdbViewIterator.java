@@ -18,7 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class CouchdbViewIterator implements Iterator<JsonNode> {
 
-    private static ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     private final JsonParser parser;
 

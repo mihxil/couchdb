@@ -6,11 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.junit.Test;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
 
 /**
  * @author Michiel Meeuwissen
@@ -49,21 +50,31 @@ public class CouchdbViewIteratorTest {
         assertEquals("urn:vpro:media:group:20709174", results.get(4).get("doc").get("urn").asText());
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void testNoSuchElementException() throws IOException {
         InputStream inputStream = CouchdbViewIterator.class.getResourceAsStream("/exampleview.json");
         CouchdbViewIterator iterator = new CouchdbViewIterator(inputStream);
         iterator.next();
         iterator.next();
-        iterator.next();
+        try {
+            iterator.next();
+            fail();
+        } catch (NoSuchElementException e) {
+            // expected
+        }
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testRemove() throws IOException {
         InputStream inputStream = CouchdbViewIterator.class.getResourceAsStream("/exampleview.json");
         CouchdbViewIterator iterator = new CouchdbViewIterator(inputStream);
         iterator.next();
-        iterator.remove();
+        try {
+            iterator.remove();
+            fail();
+        } catch (UnsupportedOperationException e) {
+            // expected
+        }
     }
 
 }
